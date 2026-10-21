@@ -28,26 +28,26 @@ export default function AuthPage() {
 
     try {
       if (mode === "register") {
-        const { data, error: authError } = await signUp(
+        const [data, authError] = await signUp(
           formData.email,
           formData.password
         );
 
-        if (authError) {
+        if (authError && typeof authError === 'object' && 'message' in authError) {
           setError(authError.message || "Error en el registro");
           return;
         }
 
-        if (data?.user) {
+        if (data && typeof data === 'object' && 'user' in data) {
           router.replace("/");
         }
       } else {
-        const { data, error: authError } = await signInWithPassword(
+        const [data, authError] = await signInWithPassword(
           formData.email,
           formData.password
         );
 
-        if (authError) {
+        if (authError && typeof authError === 'object' && 'message' in authError) {
           setError(authError.message || "Credenciales incorrectas");
           return;
         }
@@ -66,14 +66,14 @@ export default function AuthPage() {
     setError(null);
 
     try {
-      const { data, error: authError } = await signInWithOGoogle();
+      const [data, authError] = await signInWithOGoogle();
 
-      if (authError) {
+      if (authError && typeof authError === 'object' && 'message' in authError) {
         setError(authError.message || "Error en el inicio de sesión con Google");
         return;
       }
 
-      if (data?.url) {
+      if (data && typeof data === 'object' && 'url' in data && data.url) {
         window.location.href = data.url;
       }
     } catch (err) {

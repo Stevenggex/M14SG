@@ -9,11 +9,7 @@ export async function signUp(
     password,
   });
 
-  if (error) {
-    throw error;
-  }
-
-  return data;
+  return [data, error];
 }
 
 export async function signInWithPassword(
@@ -25,11 +21,7 @@ export async function signInWithPassword(
     password,
   });
 
-  if (error) {
-    throw error;
-  }
-
-  return data;
+  return [data, error];
 }
 
 export async function signInWithOGoogle() {
@@ -37,9 +29,5 @@ export async function signInWithOGoogle() {
     provider: 'google',
   });
 
-  if (error) {
-    throw error;
-  }
-
-  return data;
+  return [data, error];
 }
